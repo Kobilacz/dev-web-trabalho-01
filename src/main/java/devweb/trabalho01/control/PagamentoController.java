@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -25,22 +24,14 @@ public class PagamentoController {
   @Autowired
   PagamentoRepository pagRep;
 
-  // GET /api/pagamentos -> listar todos os pagamentos ou um pagamento dado um
-  // código de jogador
+  // GET /api/pagamentos -> listar todos os pagamentos
   @GetMapping("/pagamentos")
-  public ResponseEntity<List<Pagamento>> getAllPagamentos(
-      @RequestParam(required = false) String id) {
+  public ResponseEntity<List<Pagamento>> getAllPagamentos() {
 
     try {
       List<Pagamento> listPag = new ArrayList<Pagamento>();
 
-      if (id == null) {
-        pagRep.findAll().forEach(listPag::add);
-      } else {
-        // findById retorna somente um objeto. forEach nao é aplicado.
-        listPag.add(pagRep.findById(Integer.parseInt(id)).get());// .forEach(listPag::add);
-      }
-
+      pagRep.findAll().forEach(listPag::add);
       if (listPag.isEmpty()) {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
       }
