@@ -1,6 +1,6 @@
 package devweb.trabalho01.model;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.*;
@@ -20,23 +20,24 @@ public class Jogador {
   private String email;
 
   @Column
-  private Date data_nasc;
+  private Date dataNasc;
 
-  @OneToMany(mappedBy = "mJogador", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "jogador", cascade = CascadeType.ALL)
+
   private Set<Pagamento> pagamento;
 
-  public Jogador(String nome, String email, Date data_nasc) {
+  public Set<Pagamento> getListaPagamento() {
+    return pagamento;
+  }
+
+  public void setListaPagamento(Set<Pagamento> pagamento) {
+    this.pagamento = pagamento;
+  }
+
+  public Jogador(String nome, String email, Date dataNasc) {
     this.nome = nome;
     this.email = email;
-    this.data_nasc = data_nasc;
-  }
-
-  public int getIdJogador() {
-    return idJogador;
-  }
-
-  public void setIdJogador(int idJogador) {
-    this.idJogador = idJogador;
+    this.dataNasc = dataNasc;
   }
 
   public String getNome() {
@@ -56,23 +57,18 @@ public class Jogador {
   }
 
   public Date getDataNasc() {
-    return data_nasc;
+    return dataNasc;
   }
 
-  public void setDataNasc(Date data_nasc) {
-    this.data_nasc = data_nasc;
-  }
-  
-  public Set<Pagamento> getPagamento() {
-    return pagamento;
+  public void setDataNasc(Date dataNasc) {
+    this.dataNasc = dataNasc;
   }
 
-  public void setPagamento(Set<Pagamento>pagamento) {
-    this.pagamento = pagamento;
+  public int getIdJogador() {
+    return idJogador;
   }
 
-  @Override
-  public String toString() {
-    return "Código do jogador: " + idJogador + "\nNome: " + nome + "\nEmail: " + email + "\nData de nascimento: " + data_nasc;
+  public void setIdJogador(int idJogador) {
+    this.idJogador = idJogador;
   }
 }

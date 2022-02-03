@@ -13,24 +13,31 @@ public class Pagamento {
   private short ano;
 
   @Column
-  private byte mes;
+  private short mes;
 
   @Column
   private float valor;
 
-  @ManyToOne
+  @ManyToOne()
   @JoinColumn(name = "idJogador", referencedColumnName = "idJogador")
-  private Jogador mJogador;
+  private Jogador jogador;
 
-  public Pagamento(int idPagamento, short ano, byte mes, float valor) {
-    this.idPagamento = idPagamento;
+  public Jogador getJogador() {
+    return jogador;
+  }
+
+  public void setJogador(Jogador jogador) {
+    this.jogador = jogador;
+  }
+
+  public Pagamento(short ano, short mes, float valor) {
     this.ano = ano;
     this.mes = mes;
     this.valor = valor;
   }
 
   public int getIdPagamento() {
-    return this.idPagamento;
+    return idPagamento;
   }
 
   public void setIdPagamento(int idPagamento) {
@@ -38,32 +45,26 @@ public class Pagamento {
   }
 
   public short getAno() {
-    return this.ano;
+    return ano;
   }
 
   public void setAno(short ano) {
     this.ano = ano;
   }
 
-  public byte getMes() {
-    return this.mes;
+  public short getMes() {
+    return mes;
   }
 
-  public void setMes(byte mes) {
+  public void setMes(short mes) {
     this.mes = mes;
   }
 
   public float getValor() {
-    return this.valor;
+    return valor;
   }
 
   public void setValor(float valor) {
     this.valor = valor;
-  }
-
-  @Override
-  public String toString() {
-    return "Código do pagamento: " + idPagamento + "\nAno: " + ano + "\nMes: " + mes + "\nValor: " + valor
-        + "\nCódigo do jogador: ";
   }
 }

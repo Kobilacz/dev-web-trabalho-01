@@ -78,7 +78,7 @@ public class JogadorController {
 
   // DEL /api/jogadores/:nome -> remover jogador dado um id
   @DeleteMapping("/jogadores/{idJogador}")
-  public ResponseEntity<HttpStatus> deleteByNome(@PathVariable("idJogador") int idJogador) {
+  public ResponseEntity<HttpStatus> deleteById(@PathVariable("idJogador") int idJogador) {
     try {
       jogRep.deleteById(idJogador);
       return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
