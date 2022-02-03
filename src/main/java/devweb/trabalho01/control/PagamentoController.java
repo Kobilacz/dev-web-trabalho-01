@@ -74,11 +74,11 @@ public class PagamentoController {
     }
   }
 
-  // PUT /api/pagamentos/:cod_pagamento -> atualizar pagamento dado um id
-  @PostMapping("/pagamentos/{id}")
-  public ResponseEntity<Pagamento> updatePagamento(@PathVariable("id") int id, @RequestBody Pagamento pagamento) {
+  // PUT /api/pagamentos/:idPagamento -> atualizar pagamento dado um id
+  @PostMapping("/pagamentos/{idPagamento}")
+  public ResponseEntity<Pagamento> updatePagamento(@PathVariable("idPagamento") int idPagamento, @RequestBody Pagamento pagamento) {
 
-    Optional<Pagamento> data = pagRep.findById(id);
+    Optional<Pagamento> data = pagRep.findById(idPagamento);
 
     if (data.isPresent()) {
       Pagamento pag = data.get();
@@ -93,12 +93,12 @@ public class PagamentoController {
     }
   }
 
-  // DEL /api/pagamentos/:cod_pagamento -> remover pagamento dado id
-  @DeleteMapping("/pagamentos/{id}")
-  public ResponseEntity<HttpStatus> deletePagamento(@PathVariable("cod_pagamento") int id) {
+  // DEL /api/pagamentos/:idPagamento -> remover pagamento dado id
+  @DeleteMapping("/pagamentos/{idPagamento}")
+  public ResponseEntity<HttpStatus> deletePagamento(@PathVariable("idPagamento") int idPagamento) {
     try {
-      pagRep.deleteById(id);
-      return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+      pagRep.deleteById(idPagamento);
+      return new ResponseEntity<>(HttpStatus.OK);
     } catch (Exception e) {
       return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -109,7 +109,7 @@ public class PagamentoController {
   public ResponseEntity<HttpStatus> deleteAllPagamento() {
     try {
       pagRep.deleteAll();
-      return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+      return new ResponseEntity<>(HttpStatus.OK);
     } catch (Exception e) {
       return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
