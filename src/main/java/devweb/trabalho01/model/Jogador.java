@@ -1,6 +1,7 @@
 package devweb.trabalho01.model;
 
 import java.sql.Date;
+import java.util.Set;
 
 import javax.persistence.*;
 
@@ -10,7 +11,7 @@ public class Jogador {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  private int cod_jogador;
+  private int idJogador;
 
   @Column
   private String nome;
@@ -21,7 +22,8 @@ public class Jogador {
   @Column
   private Date data_nasc;
 
-  /* @OneToMany(mappedBy = "jogador", fetch = FetchType.LAZY, cascade = CascadeType.ALL) */
+  @OneToMany(mappedBy = "mJogador", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  private Set<Pagamento> pagamento;
 
   public Jogador(String nome, String email, Date data_nasc) {
     this.nome = nome;
@@ -29,12 +31,12 @@ public class Jogador {
     this.data_nasc = data_nasc;
   }
 
-  public int getCodJogador() {
-    return cod_jogador;
+  public int getIdJogador() {
+    return idJogador;
   }
 
-  public void setCodJogador(int cod_jogador) {
-    this.cod_jogador = cod_jogador;
+  public void setIdJogador(int idJogador) {
+    this.idJogador = idJogador;
   }
 
   public String getNome() {
@@ -60,9 +62,17 @@ public class Jogador {
   public void setDataNasc(Date data_nasc) {
     this.data_nasc = data_nasc;
   }
+  
+  public Set<Pagamento> getPagamento() {
+    return pagamento;
+  }
+
+  public void setPagamento(Set<Pagamento>pagamento) {
+    this.pagamento = pagamento;
+  }
 
   @Override
   public String toString() {
-    return "Código do jogador: " + cod_jogador + "\nNome: " + nome + "\nEmail: " + email + "\nData de nascimento: " + data_nasc;
+    return "Código do jogador: " + idJogador + "\nNome: " + nome + "\nEmail: " + email + "\nData de nascimento: " + data_nasc;
   }
 }

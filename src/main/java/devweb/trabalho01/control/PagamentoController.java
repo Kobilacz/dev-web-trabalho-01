@@ -28,15 +28,15 @@ public class PagamentoController {
   // DEL /api/pagamentos -> listar todos os pagamentos ou um pagamento dado um código de jogador
   @GetMapping("/pagamentos")
   public ResponseEntity<List<Pagamento>> getAllPagamentos(
-      @RequestParam(required = false) Integer cod_jogador) {
+      @RequestParam(required = false) Integer idPagamento) {
 
     try {
       List<Pagamento> listPag = new ArrayList<Pagamento>();
 
-      if (cod_jogador == null) {
+      if (idPagamento == null) {
         pagRep.findAll().forEach(listPag::add);
       } else {
-        pagRep.findByCodJogador(Integer.valueOf(cod_jogador)).forEach(listPag::add);
+        pagRep.findByIdPagamento(Integer.valueOf(idPagamento)).forEach(listPag::add);
       }
 
       if (listPag.isEmpty()) {
@@ -54,8 +54,8 @@ public class PagamentoController {
   @PostMapping("/pagamentos")
   public ResponseEntity<Pagamento> createPagamento(@RequestBody Pagamento pagamento) {
     try {
-      Pagamento _pagamento = pagRep.save(new Pagamento(pagamento.getCodJogador(), pagamento.getAno(),
-          pagamento.getMes(), pagamento.getValor(), pagamento.getCodJogador()));
+      Pagamento _pagamento = pagRep.save(new Pagamento(pagamento.getIdPagamento(), pagamento.getAno(),
+          pagamento.getMes(), pagamento.getValor()));
 
       return new ResponseEntity<>(_pagamento, HttpStatus.CREATED);
     } catch (Exception e) {
@@ -64,16 +64,15 @@ public class PagamentoController {
   }
 
   // PUT /api/pagamentos/:cod_pagamento -> atualizar pagamento dado um id
-  @PostMapping("/pagamentos/{cod_pagamento}")
-  public ResponseEntity<Pagamento> updatePagamento(@PathVariable("cod_pagamento") int cod_pagamento, @RequestBody Pagamento pagamento) {
-    Optional<Pagamento> data = pagRep.findById(cod_pagamento);
+  @PostMapping("/pagamentos/{idPagamento}")
+  public ResponseEntity<Pagamento> updatePagamento(@PathVariable("idPagamento") int idPagamento, @RequestBody Pagamento pagamento) {
+    Optional<Pagamento> data = pagRep.findById(idPagamento);
 
     if (data.isPresent()) {
       Pagamento pag = data.get();
       pag.setMes(pagamento.getMes());
-      pag.setAno(pagamento.getMes());
+      pag.setAno(pagamento.getAno());
       pag.setValor(pagamento.getValor());
-      pag.setCodJogador(pagamento.getCodJogador());
 
       return new ResponseEntity<>(pagRep.save(pag), HttpStatus.NOT_FOUND);
     }
@@ -83,10 +82,10 @@ public class PagamentoController {
   }
 
   // DEL /api/pagamentos/:cod_pagamento -> remover pagamento dado id
-  @DeleteMapping("/pagamentos/{cod_pagamento}")
-  public ResponseEntity<HttpStatus> deletePagamento(@PathVariable("cod_pagamento") int cod_pagamento) {
+  @DeleteMapping("/pagamentos/{idPagamento}")
+  public ResponseEntity<HttpStatus> deletePagamento(@PathVariable("idPagamento") int idPagamento) {
     try {
-      pagRep.deleteById(cod_pagamento);
+      pagRep.deleteById(idPagamento);
       return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
     catch (Exception e) {

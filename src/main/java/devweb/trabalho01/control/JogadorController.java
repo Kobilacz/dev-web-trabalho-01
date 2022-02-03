@@ -59,9 +59,9 @@ public class JogadorController {
   }
 
   // PUT /api/jogadores/:nome -> atualizar jogador dado um id
-  @PutMapping("/jogadores/{cod_jogador}")
-  public ResponseEntity<Jogador> updateJogador(@PathVariable("cod_jogador") int cod_jogador, @RequestBody Jogador jog) {
-    Optional<Jogador> data = jogRep.findById(cod_jogador);
+  @PutMapping("/jogadores/{idJogador}")
+  public ResponseEntity<Jogador> updateJogador(@PathVariable("idJogador") int idJogador, @RequestBody Jogador jog) {
+    Optional<Jogador> data = jogRep.findById(idJogador);
 
     if (data.isPresent()) {
       Jogador _jog = data.get();
@@ -77,10 +77,10 @@ public class JogadorController {
   }
 
   // DEL /api/jogadores/:nome -> remover jogador dado um id
-  @DeleteMapping("/jogadores/{cod_jogador}")
-  public ResponseEntity<HttpStatus> deleteByNome(@PathVariable("cod_jogador") int cod_jogador) {
+  @DeleteMapping("/jogadores/{idJogador}")
+  public ResponseEntity<HttpStatus> deleteByNome(@PathVariable("idJogador") int idJogador) {
     try {
-      jogRep.deleteById(cod_jogador);
+      jogRep.deleteById(idJogador);
       return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
     catch (Exception e) {

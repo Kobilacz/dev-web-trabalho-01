@@ -8,5 +8,5 @@ import java.util.List;
 public interface PagamentoRepository extends JpaRepository<Pagamento, Integer> {
   List<Pagamento> findAll();
 
-  List<Pagamento> findByCodJogador(int cod_jogador);
+  List<Pagamento> findByIdPagamento(int id);
 }

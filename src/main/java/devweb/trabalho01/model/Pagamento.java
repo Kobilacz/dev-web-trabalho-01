@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class Pagamento {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  private int cod_pagamento;
+  private int idPagamento;
 
   @Column
   private short ano;
@@ -18,26 +18,23 @@ public class Pagamento {
   @Column
   private float valor;
 
-  @Column
-  private int cod_jogador;
-/* 
-  @ManyToOne(fetch = FetchType.LAZY, optional = false)
-  @JoinColumn(name = "cod_jogador", nullable = false) */
+  @ManyToOne
+  @JoinColumn(name = "idJogador", referencedColumnName = "idJogador")
+  private Jogador mJogador;
 
-  public Pagamento(int cod_pagamento, short ano, byte mes, float valor, int cod_jogador) {
-    this.cod_pagamento = cod_pagamento;
+  public Pagamento(int idPagamento, short ano, byte mes, float valor) {
+    this.idPagamento = idPagamento;
     this.ano = ano;
     this.mes = mes;
     this.valor = valor;
-    this.cod_jogador = cod_jogador;
   }
 
-  public int getId() {
-    return this.cod_pagamento;
+  public int getIdPagamento() {
+    return this.idPagamento;
   }
 
-  public void setId(int cod_pagamento) {
-    this.cod_pagamento = cod_pagamento;
+  public void setIdPagamento(int idPagamento) {
+    this.idPagamento = idPagamento;
   }
 
   public short getAno() {
@@ -64,17 +61,9 @@ public class Pagamento {
     this.valor = valor;
   }
 
-  public int getCodJogador() {
-    return this.cod_jogador;
-  }
-
-  public void setCodJogador(int cod_jogador) {
-    this.cod_jogador = cod_jogador;
-  }
-
   @Override
   public String toString() {
-    return "Código do pagamento: " + cod_pagamento + "\nAno: " + ano + "\nMes: " + mes + "\nValor: " + valor
-        + "\nCódigo do jogador: " + cod_jogador;
+    return "Código do pagamento: " + idPagamento + "\nAno: " + ano + "\nMes: " + mes + "\nValor: " + valor
+        + "\nCódigo do jogador: ";
   }
 }
