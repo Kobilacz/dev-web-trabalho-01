@@ -25,7 +25,8 @@ public class PagamentoController {
   @Autowired
   PagamentoRepository pagRep;
 
-  // DEL /api/pagamentos -> listar todos os pagamentos ou um pagamento dado um código de jogador
+  // GET /api/pagamentos -> listar todos os pagamentos ou um pagamento dado um
+  // código de jogador
   @GetMapping("/pagamentos")
   public ResponseEntity<List<Pagamento>> getAllPagamentos(
       @RequestParam(required = false) String id) {
@@ -36,15 +37,34 @@ public class PagamentoController {
       if (id == null) {
         pagRep.findAll().forEach(listPag::add);
       } else {
-		  //findById retorna somente um objeto. forEach nao é aplicado.
-		listPag.add(pagRep.findById(Integer.parseInt(id)).get());//.forEach(listPag::add);
+        // findById retorna somente um objeto. forEach nao é aplicado.
+        listPag.add(pagRep.findById(Integer.parseInt(id)).get());// .forEach(listPag::add);
       }
 
       if (listPag.isEmpty()) {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
       }
 
-      return new ResponseEntity<>(listPag, HttpStatus.ACCEPTED);
+      return new ResponseEntity<>(listPag, HttpStatus.OK);
+
+    } catch (Exception e) {
+      return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  @GetMapping("/pagamentos/{idJogador}")
+  public ResponseEntity<List<Pagamento>> getAllPagamentos(
+      @PathVariable("idJogador") int idJogador) {
+
+    try {
+      List<Pagamento> listPag = new ArrayList<Pagamento>();
+
+      listPag.add(pagRep.findById(idJogador).get());
+      if (listPag.isEmpty()) {
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+      }
+
+      return new ResponseEntity<>(listPag, HttpStatus.OK);
 
     } catch (Exception e) {
       return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -55,7 +75,8 @@ public class PagamentoController {
   @PostMapping("/pagamentos")
   public ResponseEntity<Pagamento> createPagamento(@RequestBody Pagamento pagamento) {
     try {
-      Pagamento _pagamento = pagRep.save(new Pagamento(pagamento.getAno(),pagamento.getMes(), pagamento.getValor()/*, pagamento.getId()*/));
+      Pagamento _pagamento = pagRep
+          .save(new Pagamento(pagamento.getAno(), pagamento.getMes(), pagamento.getValor()));
       return new ResponseEntity<>(_pagamento, HttpStatus.CREATED);
     } catch (Exception e) {
       return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -65,7 +86,7 @@ public class PagamentoController {
   // PUT /api/pagamentos/:cod_pagamento -> atualizar pagamento dado um id
   @PostMapping("/pagamentos/{id}")
   public ResponseEntity<Pagamento> updatePagamento(@PathVariable("id") int id, @RequestBody Pagamento pagamento) {
-   
+
     Optional<Pagamento> data = pagRep.findById(id);
 
     if (data.isPresent()) {
@@ -76,8 +97,7 @@ public class PagamentoController {
       pag.setIdPagamento(pagamento.getIdPagamento());
 
       return new ResponseEntity<>(pagRep.save(pag), HttpStatus.NOT_FOUND);
-    }
-    else {
+    } else {
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
   }
@@ -88,8 +108,7 @@ public class PagamentoController {
     try {
       pagRep.deleteById(id);
       return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
@@ -100,8 +119,7 @@ public class PagamentoController {
     try {
       pagRep.deleteAll();
       return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }

@@ -17,7 +17,7 @@ import org.springframework.http.ResponseEntity;
 @RestController
 @RequestMapping("/api")
 public class JogadorController {
-  
+
   @Autowired
   JogadorRepository jogRep;
 
@@ -26,11 +26,9 @@ public class JogadorController {
   public ResponseEntity<List<Jogador>> getAlljogador(@RequestParam(required = false) String nome) {
     try {
       List<Jogador> lj = new ArrayList<Jogador>();
-      
       if (nome == null) {
         jogRep.findAll().forEach(lj::add);
-      }
-      else {
+      } else {
         jogRep.findByNome(nome).forEach(lj::add);
       }
 
@@ -39,9 +37,8 @@ public class JogadorController {
       }
 
       return new ResponseEntity<>(lj, HttpStatus.OK);
-      
-    }
-    catch (Exception e){
+
+    } catch (Exception e) {
       return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
@@ -52,8 +49,7 @@ public class JogadorController {
     try {
       Jogador _jog = jogRep.save(new Jogador(jog.getNome(), jog.getEmail(), jog.getDataNasc()));
       return new ResponseEntity<>(_jog, HttpStatus.CREATED);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
@@ -62,7 +58,6 @@ public class JogadorController {
   @PutMapping("/jogadores/{idJogador}")
   public ResponseEntity<Jogador> updateJogador(@PathVariable("idJogador") int idJogador, @RequestBody Jogador jog) {
     Optional<Jogador> data = jogRep.findById(idJogador);
-
     if (data.isPresent()) {
       Jogador _jog = data.get();
       _jog.setNome(jog.getNome());
@@ -70,8 +65,7 @@ public class JogadorController {
       _jog.setDataNasc(jog.getDataNasc());
 
       return new ResponseEntity<>(jogRep.save(_jog), HttpStatus.OK);
-    }
-    else {
+    } else {
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
   }
@@ -81,9 +75,8 @@ public class JogadorController {
   public ResponseEntity<HttpStatus> deleteById(@PathVariable("idJogador") int idJogador) {
     try {
       jogRep.deleteById(idJogador);
-      return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-    catch (Exception e) {
+      return new ResponseEntity<>(HttpStatus.OK);
+    } catch (Exception e) {
       return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
@@ -93,9 +86,8 @@ public class JogadorController {
   public ResponseEntity<HttpStatus> deleteAllJogadores() {
     try {
       jogRep.deleteAll();
-      return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
-    catch (Exception e) {
+      return new ResponseEntity<>(HttpStatus.OK);
+    } catch (Exception e) {
       return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }

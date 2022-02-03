@@ -26,18 +26,21 @@ public class Jogador {
 
   private Set<Pagamento> pagamento;
 
-  public Set<Pagamento> getListaPagamento() {
-    return pagamento;
-  }
-
-  public void setListaPagamento(Set<Pagamento> pagamento) {
-    this.pagamento = pagamento;
+  public Jogador() {
   }
 
   public Jogador(String nome, String email, Date dataNasc) {
     this.nome = nome;
     this.email = email;
     this.dataNasc = dataNasc;
+  }
+
+  public Set<Pagamento> getListaPagamento() {
+    return pagamento;
+  }
+
+  public void setPagamento(Set<Pagamento> pagamento) {
+    this.pagamento = pagamento;
   }
 
   public String getNome() {

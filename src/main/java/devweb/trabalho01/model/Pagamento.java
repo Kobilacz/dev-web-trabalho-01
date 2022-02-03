@@ -30,6 +30,10 @@ public class Pagamento {
     this.jogador = jogador;
   }
 
+  public Pagamento() {
+
+  }
+
   public Pagamento(short ano, short mes, float valor) {
     this.ano = ano;
     this.mes = mes;
