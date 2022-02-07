@@ -1,6 +1,8 @@
 package devweb.trabalho01.control;
 
+import devweb.trabalho01.model.Jogador;
 import devweb.trabalho01.model.Pagamento;
+import devweb.trabalho01.repository.JogadorRepository;
 import devweb.trabalho01.repository.PagamentoRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,9 @@ import java.util.Optional;
 public class PagamentoController {
   @Autowired
   PagamentoRepository pagRep;
+
+  @Autowired
+  JogadorRepository jogRep;
 
   // GET /api/pagamentos -> listar todos os pagamentos
   @GetMapping("/pagamentos")
@@ -63,11 +68,16 @@ public class PagamentoController {
   }
 
   // POST /api/pagamentos -> criar pagamento
-  @PostMapping("/pagamentos")
-  public ResponseEntity<Pagamento> createPagamento(@RequestBody Pagamento pagamento) {
+  @PostMapping("/pagamentos/{idJogador}/jogadores")
+  public ResponseEntity<Pagamento> createPagamento(@PathVariable("idJogador") int idJogador,
+      @RequestBody Pagamento pagamento) {
     try {
+      Optional<Jogador> jogador = jogRep.findById(idJogador);
+      if (jogador.isEmpty())
+        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+
       Pagamento _pagamento = pagRep
-          .save(new Pagamento(pagamento.getAno(), pagamento.getMes(), pagamento.getValor()));
+          .save(new Pagamento(pagamento.getAno(), pagamento.getMes(), pagamento.getValor(), jogador.get()));
       return new ResponseEntity<>(_pagamento, HttpStatus.CREATED);
     } catch (Exception e) {
       return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);

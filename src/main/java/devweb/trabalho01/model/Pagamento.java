@@ -2,6 +2,8 @@ package devweb.trabalho01.model;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "pagamento")
 public class Pagamento {
@@ -19,11 +21,12 @@ public class Pagamento {
   private float valor;
 
   @ManyToOne()
-  @JoinColumn(name = "idJogador", referencedColumnName = "idJogador")
+  @JoinColumn(name = "idJogador")
+  @JsonIgnore
   private Jogador jogador;
 
   public Jogador getJogador() {
-    return jogador;
+    return this.jogador;
   }
 
   public void setJogador(Jogador jogador) {
@@ -34,10 +37,11 @@ public class Pagamento {
 
   }
 
-  public Pagamento(short ano, short mes, float valor) {
+  public Pagamento(short ano, short mes, float valor, Jogador jogador) {
     this.ano = ano;
     this.mes = mes;
     this.valor = valor;
+    this.jogador = jogador;
   }
 
   public int getIdPagamento() {

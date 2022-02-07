@@ -22,8 +22,7 @@ public class Jogador {
   @Column
   private Date dataNasc;
 
-  @OneToMany(mappedBy = "jogador", cascade = CascadeType.ALL)
-
+  @OneToMany(targetEntity = Pagamento.class, mappedBy = "jogador", cascade = CascadeType.ALL)
   private Set<Pagamento> pagamento;
 
   public Jogador() {
