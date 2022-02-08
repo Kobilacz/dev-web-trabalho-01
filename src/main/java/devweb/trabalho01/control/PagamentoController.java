@@ -73,12 +73,11 @@ public class PagamentoController {
       @RequestBody Pagamento pagamento) {
     try {
       Optional<Jogador> jogador = jogRep.findById(idJogador);
-      if (jogador.isEmpty())
-        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-
-      Pagamento _pagamento = pagRep
-          .save(new Pagamento(pagamento.getAno(), pagamento.getMes(), pagamento.getValor(), jogador.get()));
-      return new ResponseEntity<>(_pagamento, HttpStatus.CREATED);
+      if (jogador.isPresent()){
+        Pagamento _pagamento = pagRep.save(new Pagamento(pagamento.getAno(), pagamento.getMes(), pagamento.getValor(), jogador.get()));
+        return new ResponseEntity<>(_pagamento, HttpStatus.CREATED);
+      }
+      return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     } catch (Exception e) {
       return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
     }
