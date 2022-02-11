@@ -1,5 +1,7 @@
 ## Desenvolvimento Web - Trabalho 01
 
+### **Alunos**: Luiz Gustavo Kobilacz, Luciano Folmer Gasparello e Rafael Hiro Kato Kawakami
+
 A classe **Jogador** possui os atributos: **identificador, nome, email e data de nascimento**.
 
 Já a classe **Pagamento**, responsável pela caracterização da entidade pagamento, possui os atributos: **identificador, ano, mês e valor**.
@@ -20,13 +22,10 @@ Relacionados a **Jogador**:
   - Método **PUT**: atualiza os dados do jogador que possui o **id**.
   
 Relacionados a **Pagamento**:
-  - /pagamentos - suporta os métodos **GET**, **POST** e *DELETE*.
+  - /pagamentos - suporta os métodos **GET**, **POST** e **DELETE**.
     - Método **GET**: busca todos os pagamentos ou, através de *query param*, busca pagamento pelo **id** do jogador;
     - Método **DELETE**: deleta todos os pagamentos ou, através de *query param*, delete pagamento pelo **id**;
   - /pagamentos/{id}/jogadores: suporta o método **POST**;
     - Método **POST**: cria um pagamento relacionado com jogador, onde o **id** recebido pela rota é o **id** do jogador;
   - /pagamentos/{id}: suporta método **PUT**:
     - Método **PUT**: atualiza dados do pagamento que o possui o **id**;
-
-**Alunos**: Luiz Gustavo Kobilacz, Luciano Folmer Gasparello e Rafael Hiro Kato Kawakami.
-
