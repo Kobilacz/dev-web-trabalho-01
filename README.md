@@ -28,4 +28,5 @@ Relacionados a **Pagamento**:
   - /pagamentos/{id}: suporta método **PUT**:
     - Método **PUT**: atualiza dados do pagamento que o possui o **id**;
 
+**Alunos**: Luiz Gustavo Kobilacz, Luciano Folmer Gasparello e Rafael Hiro Kato Kawakami.
 
