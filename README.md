@@ -24,8 +24,8 @@ Relacionados a **Jogador**:
 Relacionados a **Pagamento**:
   - /pagamentos - suporta os métodos **GET**, **POST** e **DELETE**.
     - Método **GET**: busca todos os pagamentos ou, através de *query param*, busca pagamento pelo **id** do jogador;
-    - Método **DELETE**: deleta todos os pagamentos ou, através de *query param*, delete pagamento pelo **id**;
+    - Método **DELETE**: deleta todos os pagamentos ou, através de *query param*, deleta pagamento pelo **id**;
   - /pagamentos/{id}/jogadores: suporta o método **POST**;
     - Método **POST**: cria um pagamento relacionado com jogador, onde o **id** recebido pela rota é o **id** do jogador;
   - /pagamentos/{id}: suporta método **PUT**:
-    - Método **PUT**: atualiza dados do pagamento que o possui o **id**;
+    - Método **PUT**: atualiza dados do pagamento que possui o **id**;
